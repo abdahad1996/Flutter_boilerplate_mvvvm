@@ -18,7 +18,7 @@ dependencies:
   email_validator:
   animations: ^1.1.1
   http:
-  mockito: ^4.1.2
+  mockito:  
   dartz:
   logger:
   hive: ^1.4.4

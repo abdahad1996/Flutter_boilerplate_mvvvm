@@ -26,8 +26,8 @@ class ResponsiveBuilder extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(builder: (context, boxConstraints) {
-      var mediaQuery = MediaQuery.of(context);
-      var sizingInformation = SizingInformation(
+      final mediaQuery = MediaQuery.of(context);
+      final sizingInformation = SizingInformation(
         deviceScreenType: getDeviceType(mediaQuery.size, breakpoints),
         refinedSize: getRefinedSize(
           mediaQuery.size,
@@ -56,7 +56,7 @@ class OrientationLayoutBuilder extends StatelessWidget {
   Widget build(BuildContext context) {
     return Builder(
       builder: (context) {
-        var orientation = MediaQuery.of(context).orientation;
+        final orientation = MediaQuery.of(context).orientation;
         if (orientation == Orientation.landscape) {
           if (landscape != null) {
             return landscape(context);
@@ -100,7 +100,7 @@ class ScreenTypeLayout extends StatelessWidget {
   const ScreenTypeLayout.builder(
       {Key key,
       this.breakpoints,
-       this.watch,
+      this.watch,
       this.mobile,
       this.tablet,
       this.desktop})
