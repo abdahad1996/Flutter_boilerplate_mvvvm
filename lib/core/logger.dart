@@ -1,12 +1,13 @@
 import 'dart:developer' as prefix0;
 import 'package:logger/logger.dart';
+
 class SimpleLogPrinter extends LogPrinter {
   static int counter = 0;
   final String className;
   SimpleLogPrinter(this.className);
-  
-   // ignore: missing_return
-   log(LogEvent event) {
+
+  // ignore: missing_return
+  log(LogEvent event) {
     prefix0.log(
       event.message,
       time: DateTime.now(),
@@ -34,6 +35,7 @@ class SimpleLogPrinter extends LogPrinter {
     );
   }
 }
+
 Logger getLogger(String className) {
   return Logger(printer: SimpleLogPrinter(className));
 }

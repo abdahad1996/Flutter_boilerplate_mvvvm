@@ -7,6 +7,7 @@
 import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/api.dart';
 import '../services/CounterService.dart';
@@ -14,17 +15,17 @@ import '../services/hive_Service.dart';
 import '../services/MediaService.dart';
 import '../services/permissions_service.dart';
 import '../services/postService.dart';
-import '../services/shared_preferences_service.dart';
+import '../services/StatusBarService.dart';
 import '../services/third_party_services_module.dart';
 
 /// adds generated dependencies
 /// to the provided [GetIt] instance
 
-GetIt $initGetIt(
+Future<GetIt> $initGetIt(
   GetIt get, {
   String environment,
   EnvironmentFilter environmentFilter,
-}) {
+}) async {
   final gh = GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
   gh.lazySingleton<Api>(() => Api());
@@ -36,9 +37,11 @@ GetIt $initGetIt(
       () => thirdPartyServicesModule.navigationService);
   gh.lazySingleton<PermissionsService>(() => PermissionsService());
   gh.lazySingleton<PostsService>(() => PostsService());
-  gh.lazySingleton<SharedPreferencesService>(() => SharedPreferencesService());
+  final sharedPreferences = await thirdPartyServicesModule.prefs;
+  gh.factory<SharedPreferences>(() => sharedPreferences);
   gh.lazySingleton<SnackbarService>(
       () => thirdPartyServicesModule.snackBarService);
+  gh.lazySingleton<StatusBarService>(() => StatusBarService());
   return get;
 }
 

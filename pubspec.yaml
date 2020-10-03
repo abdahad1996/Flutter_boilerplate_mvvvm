@@ -9,6 +9,7 @@ dependencies:
     sdk: flutter
   stacked:
   stacked_services:
+  shared_preferences: ^0.5.12
   flutter_hooks:
   stacked_hooks:
   image_picker:
@@ -24,6 +25,7 @@ dependencies:
   hive: ^1.4.4
   hive_flutter: ^0.3.1
   json_serializable: ^3.4.1
+  flutter_statusbarcolor:
   freezed_annotation:
 
   # The following adds the Cupertino Icons font to your application.
