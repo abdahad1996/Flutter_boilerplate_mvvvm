@@ -16,6 +16,8 @@ class HomeView extends StatelessWidget {
         viewModelBuilder: () => HomeViewModel(),
         onModelReady: (model) {
           // Do something once your model is initialized
+          print("initialized");
+          model.requestContactsPermission();
         },
         builder: (context, model, child) {
           return ScreenTypeLayout(

@@ -11,6 +11,7 @@ import 'ui/setup_snackbarUI.dart';
 import 'ui/views/home/home_view.dart';
 
 Future<void> main() async {
+  //NOTE  you pass the ensureInitialized to tell flutter to wait until everything is ok to start the app, if this is not your case you can use:
   WidgetsFlutterBinding.ensureInitialized();
   await setupLocator(Environment.prod);
   print('environement is  ${Environment.prod}');

@@ -19,9 +19,10 @@ dependencies:
   email_validator:
   animations: ^1.1.1
   http:
-  mockito: ^4.1.2
+  mockito:
   dartz:
   logger:
+  permission_handler: ^5.0.1+1
   hive: ^1.4.4
   hive_flutter: ^0.3.1
   json_serializable: ^3.4.1
