@@ -13,6 +13,7 @@ dependencies:
   flutter_hooks:
   stacked_hooks:
   image_picker:
+  cached_network_image: ^2.3.2+1
   get_it: ^4.0.4
   injectable:
   auto_route:
@@ -24,8 +25,14 @@ dependencies:
   logger:
   permission_handler: ^5.0.1+1
   hive: ^1.4.4
+  rxdart:
   hive_flutter: ^0.3.1
   json_serializable: ^3.4.1
+  # location: ^3.0.0
+  geocoding: ^1.0.4+1
+  geolocator: ^6.0.0
+  shimmer:
+  provider:
   flutter_statusbarcolor:
   freezed_annotation:
 

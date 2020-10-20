@@ -32,8 +32,14 @@ class PermissionsService {
   }
 
   //ANCHOR Requests the users permission to read their location when the app is in use
-  Future<bool> requestLocationPermission() async {
-    return _requestPermission(Permission.locationWhenInUse);
+  Future<bool> requestLocationPermission({Function onPermissionDenied}) async {
+    final granted = await _requestPermission(Permission.locationWhenInUse);
+    if (!granted) {
+      onPermissionDenied();
+    }
+
+    return granted;
+    // return _requestPermission(Permission.locationWhenInUse);
   }
 
   //ANCHOR generic function to check if the app has permission already

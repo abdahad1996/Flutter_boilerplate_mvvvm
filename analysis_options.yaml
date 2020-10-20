@@ -6,8 +6,8 @@ linter:
 
 analyzer:
   exclude:
-      - "**/*.g.dart"
-      - "**/*.freezed.dart"
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
   errors:
     missing_required_param: error
     parameter_assignments: error
@@ -15,4 +15,4 @@ analyzer:
     argument_type_not_assignable: warning
     non_bool_condition: info
     invalid_assignment: info
-     
+    return_of_invalid_type: warning
