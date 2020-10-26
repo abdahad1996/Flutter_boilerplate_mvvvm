@@ -4,12 +4,12 @@ import 'dart:ffi';
 
 import 'package:BoilerPlateMVVM/core/services/logger/logger.dart';
 import 'package:BoilerPlateMVVM/core/responsiveness/src/widget_builders.dart';
-import 'package:BoilerPlateMVVM/ui/CachedImage.dart';
+import 'package:BoilerPlateMVVM/ui/widgets/CachedImage.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:stacked/stacked.dart';
 import 'package:flutter/material.dart';
-import '../../CachedImage.dart';
+import '../../widgets/CachedImage.dart';
 import '../../../core/responsiveness/src/widget_builders.dart';
 import 'home_view_model.dart';
 part 'home_mobile.dart';

@@ -23,13 +23,13 @@ class HomeViewModel extends BaseViewModel {
     return IsGranted;
   }
 
-  getStreams() {
-    locationService.locationStream.listen((data) {
-      print("DataReceived: " + data.latitude.toString());
-    }, onDone: () {
-      print("Task Done");
-    }, onError: (error) {
-      print("Some Error");
-    });
-  }
+  // getStreams() {
+  //   locationService.locationStream.listen((data) {
+  //     print("DataReceived: " + data.latitude.toString());
+  //   }, onDone: () {
+  //     print("Task Done");
+  //   }, onError: (error) {
+  //     print("Some Error");
+  //   });
+  // }
 }

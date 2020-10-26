@@ -1,102 +1,91 @@
 // ignore: file_names
 import 'dart:async';
-import 'dart:html';
-// import 'dart:html';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:injectable/injectable.dart';
-// import 'package:location/location.dart';
 
 import '../logger/logger.dart';
 
-class UserLocation {
-  final double latitude;
-  final double longitude;
-
-  UserLocation({this.latitude, this.longitude});
-}
-
 @lazySingleton
 class LocationService {
-  // bool _serviceEnabled;
-  // // PermissionStatus _permissionGranted;
-  // // Keep track of current Location
-  // UserLocation _currentLocation;
-  // // Location location = Location();
-  // // Continuously emit location updates
+  Future<bool> get serviceEnabledOnDevice =>
+      geolocator.isLocationServiceEnabled();
+
+  bool getUserAllowPermissionStatus;
+
   final geolocator = GeolocatorPlatform.instance;
-  // StreamController<UserLocation> _locationController =
-  //     StreamController<UserLocation>.broadcast();
   StreamSubscription<Position> _positionStreamSubscription;
   final _positions = <Position>[];
   LocationService() {
-    //NOTE: ask permission
-    geolocator.checkPermission().then((permission) => {
-      switch (permission) {
-        case LocationPermission.denied:
-          break;
-        case LocationPermission.whileInUse:
-          break;
-        case LocationPermission.always:
-          break;
-        case LocationPermission.whileInUse:
-          break;
+    //NOTE: request permission
+    try {
+      geolocator.requestPermission().then((permission) {
+        switch (permission) {
+          case LocationPermission.denied:
+            getUserAllowPermissionStatus = false;
+            break;
+          case LocationPermission.whileInUse:
+            getUserAllowPermissionStatus = true;
+            break;
+          case LocationPermission.always:
+            getUserAllowPermissionStatus = true;
+            break;
+          case LocationPermission.deniedForever:
+            getUserAllowPermissionStatus = false;
 
-        // default:
+            break;
+
+          // default:
+        }
+      });
+    } catch (e) {
+      getUserAllowPermissionStatus = false;
+      final log = getLogger("locationService", "locationService()");
+      log.d("requesting permission error :$e");
+    }
+  }
+
+  bool _isListening() => !(_positionStreamSubscription == null ||
+      _positionStreamSubscription.isPaused);
+
+  void _toggleListening() {
+    if (_positionStreamSubscription == null) {
+      final positionStream = geolocator.getPositionStream();
+      _positionStreamSubscription = positionStream.handleError((error) {
+        print("ERROR LISTENING $error");
+        _positionStreamSubscription.cancel();
+        _positionStreamSubscription = null;
+      }).listen((position) => () => _positions.add(position));
+      _positionStreamSubscription.pause();
+    }
+
+    if (_positionStreamSubscription.isPaused) {
+      _positionStreamSubscription.resume();
+    } else {
+      _positionStreamSubscription.pause();
+    }
+  }
+
+  checkCurrentPermssionStatus() async {
+    try {
+      final permission = await geolocator.checkPermission();
+      if (permission == LocationPermission.denied) {
+        getUserAllowPermissionStatus = false;
       }
-    });
-    
-    // geolocator.isLocationServiceEnabled().then((isGranted) {
-
-    // });
-    // location.requestPermission().then((granted) {
-    //   final log = getLogger("locationService", "locationService()");
-    //   switch (granted) {
-    //     case PermissionStatus.denied:
-    //       break;
-    //     case PermissionStatus.granted:
-    //       try {
-    //         location.onLocationChanged.handleError((dynamic onError) {
-    //           print('handleError location: $onError');
-    //         }).listen((locationData) {
-    //           print("LOCATIONDATAAA");
-    //           if (locationData != null) {
-    //             log.d("location is valid :$locationData");
-
-    //             ///You can also get continuous callbacks when your position is changing:
-    //             _locationController.add(UserLocation(
-    //               latitude: locationData.latitude,
-    //               longitude: locationData.longitude,
-    //             ));
-    //           } else {
-    //             log.d("location is null");
-    //             _locationController.addError("SOMESORT OF ERROR");
-    //           }
-    //         }, onError: () {
-    //           log.d("error in stream ");
-    //         }, onDone: () {
-    //           log.d("done stream ");
-    //         });
-    //       } catch (e) {
-    //         print('Could not get the location: $e');
-    //       }
-
-    //       break;
-    //     case PermissionStatus.deniedForever:
-    //       break;
-    //     default:
-    //   }
-    //   // if (granted == PermissionStatus.granted) {
-    //   //   location.onLocationChanged.listen((locationData) {
-    //   //     if (locationData != null) {
-    //   //       _locationController.add(UserLocation(
-    //   //         latitude: locationData.latitude,
-    //   //         longitude: locationData.longitude,
-    //   //       ));
-    //   //     }
-    //   //   });
-    //   // }
-    // });
+      if (permission == LocationPermission.whileInUse) {
+        getUserAllowPermissionStatus = true;
+      }
+      if (permission == LocationPermission.always) {
+        getUserAllowPermissionStatus = true;
+      }
+      if (permission == LocationPermission.deniedForever) {
+        getUserAllowPermissionStatus = false;
+      }
+    } catch (e) {
+      getUserAllowPermissionStatus = false;
+      final log = getLogger("locationService", "locationService()");
+      log.d("requesting permission error :$e");
+    }
   }
 
   // Stream<UserLocation> get locationStream => _locationController.stream;
@@ -104,7 +93,11 @@ class LocationService {
   //Allow to get a one time position of the user. It will try to request permission if not granted yet
   // and will throw a PERMISSION_DENIED error code if
   //  permission still not granted.
-//   Future<UserLocation> getLocation() async {
+  Future<Position> getCurrentLocation() async {
+    final position = await geolocator.getCurrentPosition(
+        desiredAccuracy: LocationAccuracy.high);
+    return position;
+  }
 //   //   try {
 //   //     var userLocation = await location.getLocation();
 

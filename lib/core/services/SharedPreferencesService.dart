@@ -19,45 +19,47 @@ class SharedPreferencesService {
   final SharedPreferences _preferences;
   SharedPreferencesService._(this._preferences);
 
-  static const _ThemeIndexKey = 'user_key';
-  static const _UserThemeModeKey = 'user_theme_mode_key';
+  // //TODO: MOVE TO ANOTHER CLASS
+  // static const _ThemeIndexKey = 'user_key';
+  // static const _UserThemeModeKey = 'user_theme_mode_key';
 
-  int get themeIndex => _getFromDisk(_ThemeIndexKey);
+  // int get themeIndex => getFromDisk(_ThemeIndexKey);
 
-  set themeIndex(int value) => _saveToDisk(_ThemeIndexKey, value);
+  // set themeIndex(int value) => saveToDisk(_ThemeIndexKey, value);
 
-  ThemeMode get userThemeMode {
-    var userThemeString = _getFromDisk(_UserThemeModeKey);
-    if (userThemeString == ThemeMode.dark.toString()) {
-      return ThemeMode.dark;
-    }
+  // ThemeMode get userThemeMode {
+  //   var userThemeString = getFromDisk(_UserThemeModeKey);
+  //   if (userThemeString == ThemeMode.dark.toString()) {
+  //     return ThemeMode.dark;
+  //   }
 
-    if (userThemeString == ThemeMode.light.toString()) {
-      return ThemeMode.light;
-    }
+  //   if (userThemeString == ThemeMode.light.toString()) {
+  //     return ThemeMode.light;
+  //   }
 
-    return null;
-  }
+  //   return null;
+  // }
 
-  set userThemeMode(ThemeMode value) {
-    if (value == null) {
-      _saveToDisk(_UserThemeModeKey, value);
-    } else {
-      var userTheme = value.toString();
-      _saveToDisk(_UserThemeModeKey, userTheme);
-    }
-  }
+  // set userThemeMode(ThemeMode value) {
+  //   if (value == null) {
+  //     saveToDisk(_UserThemeModeKey, value);
+  //   } else {
+  //     var userTheme = value.toString();
+  //     saveToDisk(_UserThemeModeKey, userTheme);
+  //   }
+  // }
 
+  //generic methods
   void clearPreferences() {
     _preferences.clear();
   }
 
-  dynamic _getFromDisk(String key) {
+  dynamic getFromDisk(String key) {
     var value = _preferences.get(key);
     return value;
   }
 
-  void _saveToDisk(String key, dynamic content) {
+  void saveToDisk(String key, dynamic content) {
     if (content is String) {
       _preferences.setString(key, content);
     }

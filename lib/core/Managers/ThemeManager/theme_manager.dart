@@ -1,4 +1,5 @@
 import 'package:BoilerPlateMVVM/core/App/locator.dart';
+import 'package:BoilerPlateMVVM/core/helper/ThemeHelper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:provider/provider.dart';
@@ -15,6 +16,7 @@ const String DarkTheme = 'dark-theme';
 class ThemeManager {
   final _sharedPreferences = locator<SharedPreferencesService>();
   final _statusBarService = locator<StatusBarService>();
+  final _themeHelper = ThemeHelper();
 
   /// Has to be called before  we make use of the theme manager
   /// not needed since we put this all inside setuplocator in mainnfunction
@@ -68,7 +70,7 @@ class ThemeManager {
 You can supply either a list of ThemeData objects to the themes property or a lightTheme and a darkTheme to be swapped between.
         ''');
 
-    var storedThemeIndex = _sharedPreferences.themeIndex;
+    var storedThemeIndex = _themeHelper.themeIndex;
 
     ThemeData selectedTheme;
 
@@ -80,7 +82,7 @@ You can supply either a list of ThemeData objects to the themes property or a li
           print(
               '''WARNING: You have changed your number of themes. Because of this we will clear your previously selected
         theme and broadcast the first theme in your list of themes.''');
-          _sharedPreferences.themeIndex = null;
+          _themeHelper.themeIndex = null;
           selectedTheme = themes.first;
         }
       } else {
@@ -90,7 +92,7 @@ You can supply either a list of ThemeData objects to the themes property or a li
     } else {
       _selectedThemeMode = defaultTheme;
 
-      var savedUserThemeMode = _sharedPreferences.userThemeMode;
+      var savedUserThemeMode = _themeHelper.userThemeMode;
       if (savedUserThemeMode != null) {
         _selectedThemeMode = savedUserThemeMode;
       }
@@ -122,7 +124,7 @@ You can supply either a list of ThemeData objects to the themes property or a li
       themeMode: _selectedThemeMode,
     ));
 
-    _sharedPreferences.themeIndex = themeIndex;
+    _themeHelper.themeIndex = themeIndex;
   }
 
   Future _applyStatusBarColor(ThemeData theme) async {
@@ -150,7 +152,7 @@ You can supply either a list of ThemeData objects to the themes property or a li
   void setThemeMode(ThemeMode themeMode) {
     _selectedThemeMode = themeMode;
 
-    _sharedPreferences.userThemeMode = themeMode;
+    _themeHelper.userThemeMode = themeMode;
 
     if (themeMode != ThemeMode.system) {
       _applyStatusBarColor(

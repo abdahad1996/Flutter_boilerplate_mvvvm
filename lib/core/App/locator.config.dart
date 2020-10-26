@@ -8,6 +8,7 @@ import 'package:get_it/get_it.dart';
 import 'package:injectable/injectable.dart';
 import 'package:stacked_services/stacked_services.dart';
 
+import '../services/Admob/AdmobService.dart';
 import '../services/api.dart';
 import '../services/CounterService.dart';
 import '../services/hive_Service.dart';
@@ -30,6 +31,7 @@ Future<GetIt> $initGetIt(
 }) async {
   final gh = GetItHelper(get, environment, environmentFilter);
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
+  gh.lazySingleton<AdmobService>(() => AdmobService());
   gh.lazySingleton<Api>(() => Api());
   gh.lazySingleton<CounterService>(() => CounterService());
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
