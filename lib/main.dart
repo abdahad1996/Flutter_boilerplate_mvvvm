@@ -2,6 +2,7 @@ import 'package:BoilerPlateMVVM/core/App/locator.dart';
 import 'package:BoilerPlateMVVM/core/Managers/LifeCycle/LifeCycleManger.dart';
 import 'package:BoilerPlateMVVM/core/route/router.gr.dart' as autoRouter;
 import 'package:BoilerPlateMVVM/core/Managers/ThemeManager/theme_builder.dart';
+import 'package:BoilerPlateMVVM/ui/widgets/setup_bottomsheet.dart';
 import 'package:BoilerPlateMVVM/ui/widgets/setup_dialogUI.dart';
 import 'package:BoilerPlateMVVM/ui/views/dark/light_Theme/dark_light_view.dart';
 import 'package:hive/hive.dart';
@@ -24,6 +25,7 @@ Future<void> main() async {
   print('environement is  ${Environment.prod}');
   setupDialogUi();
   setupSnackbarUi();
+  setupBottomSheetUi();
   Hive.registerAdapter(PersonAdapter());
   runApp(MyApp());
 }
@@ -35,18 +37,18 @@ class MyApp extends StatelessWidget {
       child: ThemeBuilder(
         //use system thememode
         defaultThemeMode: ThemeMode.system,
-        // darkTheme: ThemeData(
-        //   brightness: Brightness.dark,
-        //   backgroundColor: Colors.red[700],
-        //   accentColor: Colors.red[700],
-        // ),
-        // lightTheme: ThemeData(
-        //   brightness: Brightness.light,
-        //   backgroundColor: Colors.green[300],
-        //   accentColor: Colors.blue[300],
-        // ),
-        darkTheme: Themes.darkTheme,
-        lightTheme: Themes.lightTheme,
+        darkTheme: ThemeData(
+          brightness: Brightness.dark,
+          backgroundColor: Colors.red[700],
+          accentColor: Colors.red[700],
+        ),
+        lightTheme: ThemeData(
+          brightness: Brightness.light,
+          backgroundColor: Colors.green[300],
+          accentColor: Colors.blue[300],
+        ),
+        // darkTheme: Themes.darkTheme,
+        // lightTheme: Themes.lightTheme,
         statusBarColorBuilder: (theme) => theme.accentColor,
         //NOTE FOR USING MULTIPLE THEMES USE THIS NOT THE LIGHT AND DARK MODE THEME
         // themes: Themes.getThemes(),
@@ -57,7 +59,7 @@ class MyApp extends StatelessWidget {
           themeMode: themeMode,
           navigatorKey: locator<NavigationService>().navigatorKey,
           // home: DarkLightView(),
-          initialRoute: autoRouter.Routes.homeView,
+          initialRoute: autoRouter.Routes.homeScreen,
           onGenerateRoute: autoRouter.Router().onGenerateRoute,
         ),
       ),

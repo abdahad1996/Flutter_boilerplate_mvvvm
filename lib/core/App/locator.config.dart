@@ -12,6 +12,7 @@ import '../services/Admob/AdmobService.dart';
 import '../services/api.dart';
 import '../services/CounterService.dart';
 import '../services/hive_Service.dart';
+import '../services/Inapp/inAppService.dart';
 import '../services/Location/LocationService.dart';
 import '../services/MediaService.dart';
 import '../services/permissions_service.dart';
@@ -33,9 +34,12 @@ Future<GetIt> $initGetIt(
   final thirdPartyServicesModule = _$ThirdPartyServicesModule();
   gh.lazySingleton<AdmobService>(() => AdmobService());
   gh.lazySingleton<Api>(() => Api());
+  gh.lazySingleton<BottomSheetService>(
+      () => thirdPartyServicesModule.bottomSheetService);
   gh.lazySingleton<CounterService>(() => CounterService());
   gh.lazySingleton<DialogService>(() => thirdPartyServicesModule.dialogService);
   gh.lazySingleton<HiveService>(() => HiveService());
+  gh.lazySingleton<InAppService>(() => InAppService());
   gh.lazySingleton<LocationService>(() => LocationService());
   gh.lazySingleton<MediaService>(() => MediaService());
   gh.lazySingleton<NavigationService>(
@@ -54,6 +58,8 @@ Future<GetIt> $initGetIt(
 }
 
 class _$ThirdPartyServicesModule extends ThirdPartyServicesModule {
+  @override
+  BottomSheetService get bottomSheetService => BottomSheetService();
   @override
   DialogService get dialogService => DialogService();
   @override

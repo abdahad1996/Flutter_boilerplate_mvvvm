@@ -14,6 +14,9 @@ abstract class ThirdPartyServicesModule {
   DialogService get dialogService;
   @lazySingleton
   SnackbarService get snackBarService;
+  @lazySingleton
+  BottomSheetService get bottomSheetService;
+
   //NOTE you can also use the @preResolve annotation when you have a async instance like SharedPreferences so GetIt will await for the resolution of this instance to continue
   @preResolve
   Future<SharedPreferencesService> get sharedPreferenceService =>

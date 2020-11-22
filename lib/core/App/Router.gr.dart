@@ -9,15 +9,24 @@
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
-import '../../ui/views/dark/light_Theme/dark_light_view.dart';
-import '../../ui/views/multipleThemes/multiple_themes_view.dart';
+import '../../ui/views/dialog_view.dart';
+import '../../ui/views/first_screen.dart';
+import '../../ui/views/home_screen.dart';
+import '../../ui/views/second_screen.dart';
+import '../../ui/views/snackbar_view.dart';
 
 class Routes {
-  static const String darkLightView = '/';
-  static const String multipleThemesView = '/multiple-themes-view';
+  static const String homeScreen = '/';
+  static const String firstScreen = '/first-screen';
+  static const String secondScreen = '/second-screen';
+  static const String snackbarView = '/snackbar-view';
+  static const String dialogView = '/dialog-view';
   static const all = <String>{
-    darkLightView,
-    multipleThemesView,
+    homeScreen,
+    firstScreen,
+    secondScreen,
+    snackbarView,
+    dialogView,
   };
 }
 
@@ -25,23 +34,75 @@ class Router extends RouterBase {
   @override
   List<RouteDef> get routes => _routes;
   final _routes = <RouteDef>[
-    RouteDef(Routes.darkLightView, page: DarkLightView),
-    RouteDef(Routes.multipleThemesView, page: MultipleThemesView),
+    RouteDef(Routes.homeScreen, page: HomeScreen),
+    RouteDef(Routes.firstScreen, page: FirstScreen),
+    RouteDef(Routes.secondScreen, page: SecondScreen),
+    RouteDef(Routes.snackbarView, page: SnackbarView),
+    RouteDef(Routes.dialogView, page: DialogView),
   ];
   @override
   Map<Type, AutoRouteFactory> get pagesMap => _pagesMap;
   final _pagesMap = <Type, AutoRouteFactory>{
-    DarkLightView: (data) {
+    HomeScreen: (data) {
+      final args = data.getArgs<HomeScreenArguments>(
+        orElse: () => HomeScreenArguments(),
+      );
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const DarkLightView(),
+        builder: (context) => HomeScreen(key: args.key),
         settings: data,
       );
     },
-    MultipleThemesView: (data) {
+    FirstScreen: (data) {
       return MaterialPageRoute<dynamic>(
-        builder: (context) => const MultipleThemesView(),
+        builder: (context) => const FirstScreen(),
+        settings: data,
+      );
+    },
+    SecondScreen: (data) {
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => const SecondScreen(),
+        settings: data,
+      );
+    },
+    SnackbarView: (data) {
+      final args = data.getArgs<SnackbarViewArguments>(
+        orElse: () => SnackbarViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => SnackbarView(key: args.key),
+        settings: data,
+      );
+    },
+    DialogView: (data) {
+      final args = data.getArgs<DialogViewArguments>(
+        orElse: () => DialogViewArguments(),
+      );
+      return MaterialPageRoute<dynamic>(
+        builder: (context) => DialogView(key: args.key),
         settings: data,
       );
     },
   };
+}
+
+/// ************************************************************************
+/// Arguments holder classes
+/// *************************************************************************
+
+/// HomeScreen arguments holder class
+class HomeScreenArguments {
+  final Key key;
+  HomeScreenArguments({this.key});
+}
+
+/// SnackbarView arguments holder class
+class SnackbarViewArguments {
+  final Key key;
+  SnackbarViewArguments({this.key});
+}
+
+/// DialogView arguments holder class
+class DialogViewArguments {
+  final Key key;
+  DialogViewArguments({this.key});
 }
