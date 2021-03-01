@@ -1,5 +1,4 @@
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:places_autocomplete/src/models/place.dart';
 
 class Place {
   final Geometry geometry;
