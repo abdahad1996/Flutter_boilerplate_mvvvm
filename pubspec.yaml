@@ -8,23 +8,40 @@ dependencies:
   flutter:
     sdk: flutter
   stacked:
-  stacked_services:
+  stacked_services: ^0.6.0
+  shared_preferences: ^0.5.12
   flutter_hooks:
   stacked_hooks:
   image_picker:
+  cached_network_image: ^2.3.2+1
   get_it: ^4.0.4
   injectable:
   auto_route:
   email_validator:
   animations: ^1.1.1
   http:
-  mockito: ^4.1.2
+  mockito:
   dartz:
   logger:
+  permission_handler: ^5.0.1+1
   hive: ^1.4.4
+  rxdart:
   hive_flutter: ^0.3.1
   json_serializable: ^3.4.1
+  google_maps_flutter: ^1.2.0
+
+  # location: ^3.0.0
+  geocoding: ^1.0.4+1
+  geolocator: ^6.0.0
+  shimmer:
+  provider:
+  flutter_statusbarcolor:
   freezed_annotation:
+  firebase_admob: ^0.10.0+2
+  flutter_credit_card: ^0.1.3
+  stripe_payment: ^1.0.7
+  progress_dialog: ^1.2.2
+  in_app_purchase: ^0.3.4+16
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

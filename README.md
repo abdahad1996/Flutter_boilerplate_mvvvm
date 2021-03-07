@@ -10,7 +10,7 @@ The architecture is very simple. It consists of 3 major pieces, everything else 
 - **ViewModel**: Manages the state of the View, business logic, and any other logic as required from user interaction. It does this by making use of the services
 - **Services**: A wrapper of a single functionality/feature set. This is commonly used to wrap things like showing a dialog, wrapping database functionality, integrating an API, etc.
 
-Let's go over some of those principles to follow during development.
+
 
 - Views should never MAKE USE of a service directly.
 - Views should contain zero to (preferred) no logic. If the logic is from UI only items then we do the least amount of required logic and pass the rest to the ViewModel.
